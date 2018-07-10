@@ -1,0 +1,22 @@
+# Watch your rails app & sidekiq process and restart it automatically
+# Usage:
+# `sudo apt-get install monit -y`
+# `cp monit.conf.example /etc/monit/conf.d/`
+# `service monit restart`
+check process ajax-template_puma
+  with pidfile /data/www/ajax-template/shared/tmp/pids/puma.pid
+  start program = "/bin/sh -c 'cd /data/www/ajax-template/current; PATH=bin:/home/ruby/.rbenv/shims:/home/ruby/.rbenv/bin:$PATH LC_ALL=en_US.UTF-8 RAILS_ENV="production" bundle exec puma -q -d -e production -C config/puma.rb'" as uid ruby and gid ruby with timeout 90 seconds
+  stop program = "/bin/sh -c 'cd /data/www/ajax-template/current; PATH=bin:/home/ruby/.rbenv/shims:/home/ruby/.rbenv/bin:$PATH LC_ALL=en_US.UTF-8 RAILS_ENV="production" bundle exec pumactl -F /data/www/ajax-template/current/config/puma.rb stop'" as uid ruby and gid ruby with timeout 90 seconds
+  group ajax-template
+
+check process ajax-template_sidekiq
+  with pidfile /data/www/ajax-template/shared/tmp/pids/sidekiq.pid
+  start program = "/bin/sh -c 'cd /data/www/ajax-template/current; PATH=bin:/home/ruby/.rbenv/shims:/home/ruby/.rbenv/bin:$PATH LC_ALL=en_US.UTF-8 RAILS_ENV="production" bundle exec sidekiq -d -e production  -C /data/www/ajax-template/current/config/sidekiq.yml -i 0 -P /data/www/ajax-template/shared/tmp/pids/sidekiq.pid -L /data/www/ajax-template/current/log/sidekiq.log'" as uid ruby and gid ruby with timeout 90 seconds
+  stop program = "/bin/sh -c 'cd /data/www/ajax-template/current; PATH=bin:/home/ruby/.rbenv/shims:/home/ruby/.rbenv/bin:$PATH LC_ALL=en_US.UTF-8 RAILS_ENV="production" bundle exec sidekiqctl stop /data/www/ajax-template/shared/tmp/pids/sidekiq.pid 11'" as uid ruby and gid ruby with timeout 90 seconds
+  group ajax-template
+
+#check process ajax-template_clockwork
+#  with pidfile /data/www/ajax-template/shared/tmp/pids/clockworkd.clock.pid
+#  start program = "/bin/sh -c 'cd /data/www/ajax-template/current; PATH=bin:/home/ruby/.rbenv/shims:/home/ruby/.rbenv/bin:$PATH LC_ALL=en_US.UTF-8 RAILS_ENV=production bundle exec clockworkd -c /data/www/ajax-template/current/config/clock.rb -i clock -d /data/www/ajax-template/current --pid-dir /data/www/ajax-template/shared/tmp/pids --log --log-dir /data/www/ajax-template/shared/log start'" as uid ruby and gid ruby with timeout 90 seconds
+#  stop program = "/bin/sh -c 'cd /data/www/ajax-template/current; PATH=bin:/home/ruby/.rbenv/shims:/home/ruby/.rbenv/bin:$PATH LC_ALL=en_US.UTF-8 RAILS_ENV=production bundle exec clockworkd -c /data/www/ajax-template/current/config/clock.rb -i clock -d /data/www/ajax-template/current --pid-dir /data/www/ajax-template/shared/tmp/pids --log --log-dir /data/www/ajax-template/shared/log stop'" as uid ruby and gid ruby with timeout 90 seconds
+#  group ajax-template
