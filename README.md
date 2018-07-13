@@ -1,25 +1,20 @@
 # ajax-template
-The source code of ajax-template
+一个使用actioncable做的notification。
 
-## Tech stack
+##目的：
 
-* Ruby on Rails 5.2
+练习actioncable的相关技术。
+
+## 用到的gem和tech
+
 * bootstrap 4
-* font-awesome
-* figaro
-* postgres
 * slim
-* high_voltage
-* active_storage
-* sidekiq
-* kaminari
-* mina
-* puma
-* lograge
+* active_job
+* active_cable
+* redis
 
-## Built with
+### Usage
+主要功能存在于Notification和User
 
-[rails template of 80percent](https://github.com/80percent/rails-template)
 
-## LICENSE
-MIT
+###### 使用了chinaRuby上推荐的80template模版。
