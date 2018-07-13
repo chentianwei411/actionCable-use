@@ -1,0 +1,51 @@
+/ javascript会在html加载完后加载，
+/ 所以写在上面的时候，需要用到$(document).ready()把函数wrap起来。
+/ 这是一个browser事件。在加载html完成后，执行内部函数。
+javascript:
+  // $(document).ready(function(){
+  //   $("#my-click").click(function(){
+  //     $("#foo").html('<p>zoo</p>');
+  //     $("#foo").append("<p>append</p>");
+  //     $("#foo").prepend("<p>prepend</p>");
+  //     $("#foo").before('<p>before</p>');
+  //     $("#foo").after('<p>after</p>');
+  //     alert("test"); //跳窗口
+  //     console.log("123123123213"); //会记录在console的log内
+  //   })
+  // })
+
+  // 因为用到turbloins加速，所以ready()改成这样写，因为默认turbolinks只触发一次
+  // 不过application.html.slim好像添加了helper方法：javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  $(document).on("turbolinks:load", function(){
+    $("#my-click").click(function(){
+      $("#foo").html('<p>zoo</p>');
+      $("#foo").append("<p>append</p>");
+      $("#foo").prepend("<p>prepend</p>");
+      $("#foo").before('<p>before</p>');
+      $("#foo").after('<p>after</p>');
+      // alert("test"); //跳窗口
+      console.log("123123123213"); //会记录在console的log内
+    })
+  })
+
+.container
+  p
+    a id='my-click' Click Me
+  div id='foo' style="border: 1px solid red;"
+    p bar
+
+// javascript:
+//   $("#my-click").click(function(){
+//     $("#foo").html('<p>zoo</p>');
+//     $("#foo").append("<p>append</p>");
+//     $("#foo").prepend("<p>prepend</p>");
+//     $("#foo").before('<p>before</p>');
+//     $("#foo").after('<p>after</p>');
+//     alert("test"); //跳窗口
+//     console.log("123123123213"); //会记录在console的log内
+//   })
+/ text 文字替换
+/ prepend 把内容插在指定元素里面的最前面
+/ append 把内容插在指定元素里面的最后面
+/ before 把内容插在指定元素的前面
+/ after 把内容插在指定元素的后面

@@ -1,0 +1,29 @@
+javascript:
+  $(document).on("turbolinks:load", function(){
+    $("#my-replace-click").click(function(){
+      $("#foo2").replaceWith('<div id="foo2" style="border:1px solid green"><p>foo</p></div>');
+    })
+    $("#my-remove-click").click(function(){
+      $("#foo2").remove();
+    })
+
+    $("#my-remove-all-click").click(function(){
+      $(".zoo").remove();
+    })
+  })
+
+p
+  a#my-replace-click Replace
+  ||
+  a#my-remove-click Remove
+  ||
+  a#my-remove-all-click Remove All
+
+div#foo2 style="border: 1px solid red;"
+  p bar
+div.zoo
+  p a
+div.zoo
+  p b
+div.zoo
+  p c

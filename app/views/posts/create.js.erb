@@ -1,0 +1,8 @@
+// valid? 运行所有验证，如果通过，返回true
+Turbolinks.clearCache()
+<% if @post.valid? %>
+  $("<%= escape_javascript(render :partial => "post", :locals => { :post => @post }) %>").prependTo("#post-list");
+  $('#post_content').val("");
+<% else %>
+  alert("贴文失败");
+<% end %>

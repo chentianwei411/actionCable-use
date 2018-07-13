@@ -1,0 +1,30 @@
+javascript:
+  $(document).on("turbolinks:load", function(){
+    $('#my-toggle-click').hover(function(){
+      $('#foo1').toggle();
+    })
+  })
+
+
+.container
+  p 鼠标移动到toggle:
+  p
+    a#my-toggle-click Toggle
+
+  div#foo1 style="border: 1px solid red;"
+    p bar
+
+
+
+/ css:
+/   #my-toggle-click:hover {
+/     background-color: lightblue;
+/   }
+/
+/   #foo1 {
+/     display: none;
+/   }
+/ / 不管用了，不知道原因。
+/   a:hover + #foo1 {
+/     display: block;
+/   }

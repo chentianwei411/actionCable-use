@@ -1,0 +1,2 @@
+str = "<%= escape_javascript(render :partial => "like", locals: { :post => @post }) %>";
+$("#post-like-<%= @post.id %>").html(str);

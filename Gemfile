@@ -48,6 +48,8 @@ gem 'mina-multistage', '~> 1.0.3', require: false
 gem 'mina-sidekiq', '~> 1.0.3', require: false
 gem 'mina-logs', '~> 1.1.0', require: false
 gem 'lograge'
+gem "devise"
+gem 'faker'
 group :development do
   gem 'rails_apps_testing'
 end

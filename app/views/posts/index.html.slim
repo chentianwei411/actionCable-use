@@ -1,0 +1,46 @@
+javascript:
+  // $(document).on("turbolinks:load", function(){
+  //   $(".delete-post").click(function(evt){
+  //     evt.preventDefault();
+  //     var url = $(this).attr("href");
+  //     $.ajax({
+  //       url: url,
+  //       method: 'DELETE',
+  //       dataType: 'json',
+  //       success: function(data){
+  //         $("#post-" + data["id"]).remove();
+  //       }
+  //     })
+  //     // 也有preventDefault()的作用
+  //     // return false
+  //   })
+  // })
+  // 使用原生的js:
+  document.addEventListener("turbolinks:load", function() {
+    document.querySelectorAll(".delete-post").forEach(function(anchor) {
+      anchor.addEventListener("click", function(event) {
+        event.preventDefault();
+        var url = this.getAttribute("href");
+        Rails.ajax({
+          url: url,
+          type: "DELETE",
+          dataType: 'json',
+          success: function(data) {
+            document.getElementById("post-" + data["id"]).style.display = 'none'
+          }
+        })
+      })
+    })
+  })
+
+.container
+  = form_with(model: Post.new) do |f|
+    div.form-group
+      = f.label "新增卡片："
+      = f.text_area :content, class: "form-control", id:"post_content"
+    div.form-group
+      = f.submit "添加",class: "btn btn-primary btn-sm", id:"form_submit"
+
+  div#post-list
+    - @posts.each do |post|
+      = render 'post', post: post

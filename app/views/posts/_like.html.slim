@@ -1,0 +1,9 @@
+- unless post.likes.empty?
+  = post.likes.map { |like| like.user.display_name }.join(",")
+  | 点了赞，共计：
+  = post.likes.count
+  | 👍
+- if Like.find_by(user_id: current_user.id, post_id: post.id)
+  = link_to "-1", unlike_post_path(post), method: :post, class: "btn btn-primary btn-sm", remote: true
+- else
+  = link_to "+1", like_post_path(post), method: :post, class: "btn btn-primary btn-sm", remote: true

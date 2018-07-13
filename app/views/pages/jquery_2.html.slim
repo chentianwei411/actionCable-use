@@ -1,0 +1,21 @@
+javascript:
+  // hide, show; fadeOut, fadeIn; slideUP, slideDown;
+  // bootstrap4里面的collapse就用到了slideDown事件。
+  $(document).on("turbolinks:load", function(){
+    $('#foo').hide();
+
+    $('#my-open-link').click(function(){
+      $('#foo').slideDown();
+    })
+
+    $('#my-hide-link').click(function(){
+      $('#foo').hide();
+    })
+  })
+
+.container
+  p
+    a#my-open-link Open
+
+  div#foo style="border: 1px solid red;"
+    a#my-hide-link Hide

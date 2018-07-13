@@ -1,0 +1,52 @@
+div.card.rounded.border-info style="margin-bottom: 10px" id="post-#{post.id}"
+  div.card-title.rounded-top.bg-info
+    h4.ml-3 = post.user.display_name
+  div.card-body
+    p.card-text = post.content
+    - if current_user && post.user == current_user
+      p.text-right
+        span id="post-like-#{post.id}"
+          = render :partial => "like", locals: {post: post}
+        = link_to "删除", post_path(post), class:"delete-post btn btn-danger btn-sm ml-1"
+  div.card-footer
+    - if current_user && current_user.is_admin?
+      label
+        = check_box_tag("mark_flag_#{post.id}", 1, post.flag_at.present?, :data => { :url => toggle_flag_post_path(post)}, class: "toggle-flag")
+        | 标记为垃圾
+        span id="post-flag-#{post.id}" #{post.flag_at}
+
+// javascript:
+//   document.querySelectorAll(".delete-post").forEach(function(anchor) {
+//     anchor.addEventListener("click", function(event) {
+//       event.preventDefault();
+//       var url = this.getAttribute("href");
+//       Rails.ajax({
+//         url: url,
+//         type: "DELETE",
+//         dataType: 'json',
+//         success: function(data) {
+//           document.getElementById("post-" + data["id"]).style.display = 'none';
+//         }
+//       })
+//     })
+//   })
+
+  // document.querySelectorAll(".toggle-flag").forEach(function(anchor){
+  //   anchor.addEventListener("click", function(event) {
+  //     var url = this.getAttribute("href");
+  //     Rails.ajax({
+  //       url: url,
+  //       type: "POST",
+  //       dataType: "json",
+  //       success: function(data) {
+  //         if (data["flag_at"]) {
+  //           document.getElementById("#post-flag-"  data["id"]).innerHTML = "OK!!!";
+  //           console.log("标记了");
+  //         } else {
+  //           document.getElementById("#post-flag-"  data["id"]).innerHTML = "";
+  //           console.log("未标记");
+  //         }
+  //       }
+  //     })
+  //   })
+  // })

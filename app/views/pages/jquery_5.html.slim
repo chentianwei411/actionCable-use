@@ -1,0 +1,27 @@
+css:
+  .error {
+    color: red;
+  }
+  .success {
+    color: green;
+  }
+
+javascript:
+  $(document).on("turbolinks:load", function(){
+    $("#my-add-class-click").click(function(){
+      $("#foo3").removeClass('error');
+      $("#foo3").addClass("success");
+    })
+    $("#my-remove-class-click").click(function(){
+      $("#foo3").removeClass('success');
+      $("#foo3").addClass('error');
+    })
+  })
+
+p
+  a#my-add-class-click Add Class
+  ||
+  a#my-remove-class-click Remove
+
+div#foo3
+  h1 bar
