@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get '/jquery-5', to: 'pages#jquery_5'
   get '/about', to: 'pages#about'
 
+  get '/home', to: "home#index"
+
   mount Sidekiq::Web => '/sidekiq'
   mount StatusPage::Engine => '/'
   #mount ActionCable.server => '/cable'
