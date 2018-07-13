@@ -14,6 +14,7 @@ class PostsController < ApplicationController
     @post.user = current_user
     @post.save
     # redirect_to posts_path
+    # 没有使用js, 因为循环js代码的问题没有解决。
   end
 
   def destroy

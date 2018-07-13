@@ -1,21 +1,4 @@
 javascript:
-  // $(document).on("turbolinks:load", function(){
-  //   $(".delete-post").click(function(evt){
-  //     evt.preventDefault();
-  //     var url = $(this).attr("href");
-  //     $.ajax({
-  //       url: url,
-  //       method: 'DELETE',
-  //       dataType: 'json',
-  //       success: function(data){
-  //         $("#post-" + data["id"]).remove();
-  //       }
-  //     })
-  //     // 也有preventDefault()的作用
-  //     // return false
-  //   })
-  // })
-  // 使用原生的js:
   document.addEventListener("turbolinks:load", function() {
     document.querySelectorAll(".delete-post").forEach(function(anchor) {
       anchor.addEventListener("click", function(event) {
@@ -53,17 +36,21 @@ javascript:
     })
   })
 
-.container
-  = form_with(model: Post.new) do |f|
-    div.form-group
-      = f.label "新增卡片："
-      = f.text_area :content, class: "form-control", id:"post_content"
-    div.form-group
-      = f.submit "添加",class: "btn btn-primary btn-sm", id:"form_submit"
 
-  div#post-list
-    - @posts.each do |post|
-      = render 'post', post: post
-
-  / div#post-list
-  /   = render partial: 'post_collection', collection: @posts
+= @posts.each do |post|
+  div.card.rounded.border-info style="margin-bottom: 10px" id="post-#{post.id}"
+    div.card-title.rounded-top.bg-info
+      h4.ml-3 = post.user.display_name
+    div.card-body
+      p.card-text = post.content
+      - if current_user && post.user == current_user
+        p.text-right
+          span id="post-like-#{post.id}"
+            = render :partial => "like", locals: {post: post}
+          = link_to "删除", post_path(post), class:"delete-post btn btn-danger btn-sm ml-1"
+    div.card-footer
+      - if current_user && current_user.is_admin?
+        label
+          = check_box_tag("mark_flag_#{post.id}", 1, post.flag_at.present?, :data => { :url => toggle_flag_post_path(post)}, class: "toggle-flag")
+          | 标记为垃圾
+          span id="post-flag-#{post.id}" #{post.flag_at}
