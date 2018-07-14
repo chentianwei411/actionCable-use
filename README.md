@@ -16,5 +16,7 @@
 ### Usage
 主要功能存在于Notification和User
 
+增加了javascript验证，非登陆用于不能connection ActionCable
+
 
 ###### 使用了chinaRuby上推荐的80template模版。

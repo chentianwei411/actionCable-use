@@ -2,8 +2,6 @@ class NotificationsChannel < ApplicationCable::Channel
   def subscribed
     # 当你加入频道，你只会收到你的通知。当创建一个订阅后，从客户端向服务器端传参数
     stream_from "notifications:#{current_user.id}"
-    # stream_for model
-    #
   end
 
   def unsubscribed
