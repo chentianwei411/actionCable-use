@@ -8,9 +8,9 @@ App.notifications = App.cable.subscriptions.create("NotificationsChannel", {
   },
 
   received: function(data) {
-    // Called when there's incoming data on the websocket for this channel
-    // document.getElementById("notifications").innerHTML = data.html;
-    // 👆的只是取代，不能增加节点，我像知道如何增加子节点。
-    $("#notifications").prepend(data.html);
+    // $("#notifications").prepend(data.html);
+    var para = document.createElement('div')
+    document.getElementById("notifications").appendChild(para)
+    document.getElementById("notifications").lastChild.innerHTML = data.html
   }
 });
